@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wasatch Systems | Automated Intake & Quoting for Independent Shops</title>
+  <style>
+    :root {
+      --bg: #0c0e12;
+      --surface: #141820;
+      --surface-alt: #1b202b;
+      --border: #272e3d;
+      --text: #eef1f6;
+      --muted: #98a2b3;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      background: rgba(12, 14, 18, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .nav-cta {
+      background: var(--surface-alt);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: border-color 0.2s;
+    }
+
+    .nav-cta:hover { border-color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      padding: 76px 0 60px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(2.1rem, 4.5vw, 3.2rem);
+      line-height: 1.15;
+      font-weight: 800;
+      max-width: 820px;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: 1.12rem;
+      color: var(--muted);
+      max-width: 680px;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 13px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.98rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--accent-hover); }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      padding: 13px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.98rem;
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover { border-color: var(--muted); }
+
+    /* Sections */
+    section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.65rem;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      margin-bottom: 36px;
+      max-width: 660px;
+    }
+
+    /* 3-Step Pipeline Cards */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .step-num {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .card h3 {
+      font-size: 1.12rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Interactive Demo Box */
+    .demo-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px;
+    }
+
+    @media (max-width: 780px) {
+      .demo-wrapper { grid-template-columns: 1fr; }
+    }
+
+    .preset-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .preset-btn {
+      background: var(--surface-alt);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
+    .preset-btn:hover { border-color: var(--accent); }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    input, textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .output-panel {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .status-pill {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.78rem;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+    }
+
+    .pill-pass { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.35); }
+    .pill-block { background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.35); }
+    .pill-urgent { background: rgba(245, 158, 11, 0.15); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.35); }
+
+    .kv-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    .kv-label { color: var(--muted); }
+    .kv-val { font-weight: 600; text-align: right; }
+
+    .reply-box {
+      margin-top: 14px;
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: 12px;
+      font-size: 0.9rem;
+      color: var(--text);
+      border-radius: 0 6px 6px 0;
+    }
+
+    /* Pilot Offer */
+    .pilot-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .pilot-details { max-width: 600px; }
+
+    footer {
+      padding: 36px 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        Wasatch Systems
+      </div>
+      <a href="mailto:harlan@wasatchsys.com?subject=Shop%20Intake%20Walkthrough" class="nav-cta">harlan@wasatchsys.com</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <span class="badge">SALT LAKE CITY, UT • AUTOMATED SHOP INTAKE</span>
+      <h1>Stop losing bay bookings while your techs are under a hood.</h1>
+      <p>
+        Wasatch Systems connects directly to your shop’s existing email and service price sheet—filtering out vendor spam, quoting standard jobs in 5 seconds, and flagging urgent repairs before customers call the shop down the street.
+      </p>
+      <div class="hero-actions">
+        <a href="mailto:harlan@wasatchsys.com?subject=10-Minute%20Shop%20Demo" class="btn-primary">Book a 10-Min Walkthrough</a>
+        <a href="#live-demo" class="btn-secondary">Test the Quote Engine ↓</a>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section>
+      <h2>Built for how independent shops actually run</h2>
+      <p class="section-sub">No new CRM to learn and no generic chatbots guessing repair prices. Everything logs straight into a clean Google Sheet and drafts replies in your inbox.</p>
+      <div class="grid-3">
+        <div class="card">
+          <span class="step-num">01 // INBOX GATEKEEPER</span>
+          <h3>Filters Out Vendor & Spam Noise</h3>
+          <p>Automatically separates real vehicle owners from NAPA/Worldpac parts promos, receipts, and cold sales emails so your lead tracker stays clean.</p>
+        </div>
+        <div class="card">
+          <span class="step-num">02 // LIVE MENU LOOKUP</span>
+          <h3>Quotes Your Exact Prices—Never Guesses</h3>
+          <p>Cross-references your shop’s actual Google Sheets price menu (including European/diesel surcharges) and marks complex jobs as <em>Custom Quote Required</em>.</p>
+        </div>
+        <div class="card">
+          <span class="step-num">03 // URGENCY & DRAFT REPLY</span>
+          <h3>Flags Safety Issues & Drafts the Response</h3>
+          <p>Detects failing brakes, overheating, or no-start emergencies immediately and prepares a ready-to-send reply with price and turnaround time.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE SIMULATOR -->
+    <section id="live-demo">
+      <h2>Test the Intake & Quoting Engine</h2>
+      <p class="section-sub">Click a sample incoming email below (or type your own) to see how the Gatekeeper and Price Menu logic process it in real time.</p>
+      <div class="demo-wrapper">
+        <div>
+          <label>Quick Sample Emails:</label>
+          <div class="preset-bar">
+            <button type="button" class="preset-btn" onclick="loadPreset('bmw')">BMW Oil Change</button>
+            <button type="button" class="preset-btn" onclick="loadPreset('wrx')">WRX Clutch (Unlisted)</button>
+            <button type="button" class="preset-btn" onclick="loadPreset('brakes')">Urgent Brake Failure</button>
+            <button type="button" class="preset-btn" onclick="loadPreset('vendor')">Parts Vendor Promo</button>
+          </div>
+
+          <label for="sim-from">From</label>
+          <input type="text" id="sim-from" value="Chloe Park <chloe.park@example.com>" />
+
+          <label for="sim-subject">Subject</label>
+          <input type="text" id="sim-subject" value="Synthetic oil change quote" />
+
+          <label for="sim-body">Email Message</label>
+          <textarea id="sim-body" rows="4">Hey, how much for a full synthetic oil change on my 2018 BMW 330i? You can text me at 801-555-0199. Thanks!</textarea>
+
+          <button type="button" class="btn-primary" style="width:100%;" onclick="runSimulation()">Run Intake Pipeline →</button>
+        </div>
+
+        <div class="output-panel" id="sim-output">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCAL PILOT OFFER -->
+    <section style="border-bottom:none;">
+      <div class="pilot-box">
+        <div class="pilot-details">
+          <span class="step-num">SALT LAKE VALLEY FOUNDER PILOT</span>
+          <h2>48-Hour Setup on Your Existing Inbox</h2>
+          <p style="color:var(--muted); margin-top:8px;">
+            I’m a mechanical engineering student at the University of Utah partnering with 3 local Salt Lake City shops this month. I’ll wire this directly into your shop inbox and service menu in 48 hours—if it doesn’t save your front desk hours in the first 14 days, you don’t pay.
+          </p>
+        </div>
+        <div>
+          <a href="mailto:harlan@wasatchsys.com?subject=SLC%20Shop%20Pilot%20Inquiry" class="btn-primary">Email Harlan →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div>© 2026 Wasatch Systems • Salt Lake City, Utah</div>
+    <div>Built by Harlan Loso • <a href="mailto:harlan@wasatchsys.com" style="color:var(--muted);">harlan@wasatchsys.com</a></div>
+  </footer>
+
+  <script>
+    const presets = {
+      bmw: {
+        from: "Chloe Park <chloe.park@example.com>",
+        subject: "Synthetic oil change quote",
+        body: "Hey, how much for a full synthetic oil change on my 2018 BMW 330i? You can text me at 801-555-0199. Thanks!"
+      },
+      wrx: {
+        from: "Derek Hale <derek.h@example.com>",
+        subject: "Clutch swap inquiry",
+        body: "Looking for a quote to swap a Stage 2 clutch on a 2005 Subaru WRX. Let me know availability."
+      },
+      brakes: {
+        from: "Marcus Vance <mvance@example.com>",
+        subject: "Grinding brakes - unsafe to drive",
+        body: "My 2016 F-150 front brakes started grinding metal-on-metal this morning and the pedal feels soft. Can I bring it in today? 801-555-0144"
+      },
+      vendor: {
+        from: "NAPA ProLink <promos@napaprolink.com>",
+        subject: "20% off wholesale rotors & pads this week!",
+        body: "Stock up for winter! Order 10+ brake kits before Friday and save 20% on your shop account."
+      }
+    };
+
+    function loadPreset(key) {
+      document.getElementById("sim-from").value = presets[key].from;
+      document.getElementById("sim-subject").value = presets[key].subject;
+      document.getElementById("sim-body").value = presets[key].body;
+      runSimulation();
+    }
+
+    function runSimulation() {
+      const from = document.getElementById("sim-from").value;
+      const subject = document.getElementById("sim-subject").value.toLowerCase();
+      const body = document.getElementById("sim-body").value;
+      const text = (subject + " " + body).toLowerCase();
+      const out = document.getElementById("sim-output");
+
+      // Gatekeeper check
+      if (text.includes("napa") || text.includes("wholesale") || text.includes("20% off") || text.includes("unsubscribe")) {
+        out.innerHTML = `
+          <div>
+            <span class="status-pill pill-block">GATEKEEPER: IGNORED (NON-CUSTOMER)</span>
+            <div class="kv-row"><span class="kv-label">is_customer</span><span class="kv-val" style="color:var(--red);">false</span></div>
+            <div class="kv-row"><span class="kv-label">Reason</span><span class="kv-val">Wholesale parts vendor promotion</span></div>
+            <div class="kv-row"><span class="kv-label">Sheet Action</span><span class="kv-val">Stopped — 0 rows added</span></div>
+          </div>
+          <div class="reply-box" style="border-left-color:var(--red); color:var(--muted);">
+            Workflow terminated early. No quote generated and your lead tracker stays clutter-free.
+          </div>
+        `;
+        return;
+      }
+
+      const nameMatch = from.split("<")[0].trim() || "Customer";
+      const emailMatch = (from.match(/<([^>]+)>/) || [null, from])[1].trim();
+      const phoneMatch = body.match(/(\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})/);
+      const contact = phoneMatch ? phoneMatch[0] : emailMatch;
+
+      let quote = "Custom Quote Required";
+      let time = "TBD";
+      let category = "other";
+      let urgent = false;
+      let serviceSummary = subject || "General vehicle service inquiry";
+      let reply = `Hi ${nameMatch.split(" ")[0]}, thanks for reaching out! Because this job requires a custom parts and labor check, our lead tech will review your vehicle details and follow up shortly with an exact estimate.`;
+
+      if (text.includes("oil")) {
+        const isEuro = text.includes("bmw") || text.includes("audi") || text.includes("vw") || text.includes("mercedes");
+        quote = isEuro ? "$105 (incl. +$20 Euro surcharge)" : "$85";
+        time = "45 mins";
+        category = "maintenance";
+        serviceSummary = isEuro ? "Full synthetic oil change (European vehicle)" : "Full synthetic oil change";
+        reply = `Hi ${nameMatch.split(" ")[0]}, a full synthetic oil change for your vehicle is ${quote} and takes about ${time}. Want us to get a bay reserved for you this week?`;
+      } else if (text.includes("brake") || text.includes("grinding")) {
+        quote = "$280 / axle";
+        time = "1.5 hours";
+        category = "brakes";
+        urgent = text.includes("grinding") || text.includes("unsafe") || text.includes("soft");
+        serviceSummary = "Front brake inspection & pad/rotor service";
+        reply = `Hi ${nameMatch.split(" ")[0]}, because grinding brakes are a safety concern, we’d like to get your truck checked right away. Standard front brake service starts at ${quote} (${time})—can you bring it by today?`;
+      } else if (text.includes("clutch")) {
+        category = "drivetrain / engine";
+        serviceSummary = "2005 Subaru WRX Stage 2 clutch replacement";
+      }
+
+      out.innerHTML = `
+        <div>
+          <span class="status-pill ${urgent ? "pill-urgent" : "pill-pass"}">
+            ${urgent ? "URGENT BAY LEAD • LOGGED TO SHEET" : "CUSTOMER LEAD • LOGGED IN 4.8s"}
+          </span>
+          <div class="kv-row"><span class="kv-label">Customer</span><span class="kv-val">${nameMatch}</span></div>
+          <div class="kv-row"><span class="kv-label">Contact Info</span><span class="kv-val">${contact}</span></div>
+          <div class="kv-row"><span class="kv-label">Service Needed</span><span class="kv-val">${serviceSummary}</span></div>
+          <div class="kv-row"><span class="kv-label">Est. Quote</span><span class="kv-val" style="color:var(--green);">${quote}</span></div>
+          <div class="kv-row"><span class="kv-label">Est. Time</span><span class="kv-val">${time}</span></div>
+          <div class="kv-row"><span class="kv-label">Category / Urgent</span><span class="kv-val">${category} • ${urgent ? "TRUE" : "false"}</span></div>
+        </div>
+        <div class="reply-box">
+          <strong style="font-size:0.78rem; color:var(--muted); display:block; margin-bottom:4px;">DRAFTED REPLY:</strong>
+          ${reply}
+        </div>
+      `;
+    }
+
+    runSimulation();
+  </script>
+</body>
+</html>
